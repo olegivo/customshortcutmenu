@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace CustomShortcutMenu
@@ -11,26 +10,52 @@ namespace CustomShortcutMenu
             InitializeComponent();
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-            var sb = new StringBuilder();
-            if (e.Control) sb.Append("<Control> + ");
-            if (e.Alt) sb.Append("<Alt> + ");
-            if (e.Shift) sb.Append("<Shift> + ");
-            //sb.Append(e.KeyData.ToString());
-            sb.Append(e.KeyCode.ToString());
-            textBox1.Text = sb.ToString();
-            item.Shortcut = e.KeyData;
-            item.Modifiers = e.Modifiers;
-            args = e;
-        }
-        ShortcutMenu item = new ShortcutMenu();
-        private KeyEventArgs args;
+        public List<ShortcutMenu> ShortcutMenus { get; set; }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BuildItem(ShortcutMenu shortcutMenu, TreeNodeCollection nodes)
         {
-            
+            var treeNode = nodes.Add(shortcutMenu.ToString());
+            treeNode.Tag = shortcutMenu;
+            if (shortcutMenu.SubItems!=null)
+                foreach (var subItem in shortcutMenu.SubItems)
+                    BuildItem(subItem, treeNode.Nodes);
+        }
+
+        private void CustomizationForm_Load(object sender, System.EventArgs e)
+        {
+            foreach (var shortcutMenu in ShortcutMenus)
+                BuildItem(shortcutMenu, treeView1.Nodes);
+            treeView1.ExpandAll();
+        }
+
+        private ShortcutMenu GetSelectedMenu(TreeNode node)
+        {
+            return node != null ? node.Tag as ShortcutMenu : null;
+        }
+
+        private void buttonEdit_Click(object sender, System.EventArgs e)
+        {
+            if (treeView1.SelectedNode != null && treeView1.SelectedNode.Level == 0)
+            {
+                var menu = GetSelectedMenu(treeView1.SelectedNode);
+                var form = new CustomizeShortcutForm { ShortcutMenu = menu };
+                form.ShowDialog();
+            }
+        }
+
+        private void buttonAddSubItem_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void buttonAddNewMenu_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

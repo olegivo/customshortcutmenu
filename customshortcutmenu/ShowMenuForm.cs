@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -13,7 +14,8 @@ namespace CustomShortcutMenu
         public ShowMenuForm()
         {
             InitializeComponent();
-            LoadMenu();
+            menus = LoadMenu();
+            RebuildMenuItems();
         }
 
         private const int WM_HOTKEY = 0x0312;
@@ -37,7 +39,7 @@ namespace CustomShortcutMenu
             contextMenu.Show(this, PointToClient(position));
         }
 
-        private  void LoadMenu()
+        public List<ShortcutMenu> LoadMenu()
         {
             object o;
             using (var reader = new StreamReader("settings.xml"))
@@ -46,15 +48,13 @@ namespace CustomShortcutMenu
                 o = serializer.Deserialize(reader);
                 reader.Close();
             }
-            menus = (List<ShortcutMenu>)o;
-            RebuildMenuItems();
+            return (List<ShortcutMenu>)o;
         }
 
         private void RebuildMenuItems()
         {
             UnregisterHotKey();
             hotkeyDic = new Dictionary<short, ContextMenu>();
-            var customizeMenu = new MenuItem("Настроить меню");
             foreach (var menu in menus)
             {
                 var contextMenu = new ContextMenu();
@@ -62,8 +62,12 @@ namespace CustomShortcutMenu
                     {
                         WindowState = FormWindowState.Minimized;
                     };
+                contextMenu.MenuItems.Add("Отмена");
+                contextMenu.MenuItems.Add("-");
                 contextMenu.MenuItems.AddRange(menu.GetMenuItems());
-                contextMenu.MenuItems.Add(customizeMenu);
+                contextMenu.MenuItems.Add("-");
+                contextMenu.MenuItems.Add(new MenuItem("Настроить меню", (sender, args) => CustomizeMenus()));
+                contextMenu.MenuItems.Add(new MenuItem("Закрыть программу", (sender, args) => Close()));
 
                 menu.RegisterHotkey(Handle);
                 hotkeyDic.Add(menu.HotkeyId, contextMenu);
@@ -81,8 +85,16 @@ namespace CustomShortcutMenu
 
         }
 
+        private void CustomizeMenus()
+        {
+            //TODO: вносить изменения в клон переданного объекта, чтобы изменения применялись только по требованию пользователя (кнопка "сохранить")
+            var customizeShortcutForm = new CustomizationForm {ShortcutMenus = menus};
+            customizeShortcutForm.ShowDialog();
+        }
+
         private void ShowMenuForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            SaveMenu(menus, "settings.xml");
             UnregisterHotKey();
         }
 
@@ -91,6 +103,23 @@ namespace CustomShortcutMenu
             foreach (var menu in menus)
                 menu.UnregisterHotkey();
             //UnregisterHotKey(Handle, GetType().GetHashCode());
+        }
+
+        public void SaveMenu(List<ShortcutMenu> shortcutMenus, string settingsFilename)
+        {
+            try
+            {
+                using (var writer = new StreamWriter(settingsFilename))
+                {
+                    var serializer = new XmlSerializer(typeof(List<ShortcutMenu>));
+                    serializer.Serialize(writer, shortcutMenus);
+                    writer.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

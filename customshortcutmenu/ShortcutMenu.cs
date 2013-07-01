@@ -70,7 +70,7 @@ namespace CustomShortcutMenu
 
         public virtual MenuItem GetMenuItem()
         {
-            var menuItem = new MenuItem(Description){Shortcut = (Shortcut) Shortcut};
+            var menuItem = new MenuItem(Description) { Shortcut = (Shortcut)Shortcut };
             if (SubItems != null)
                 menuItem.MenuItems.AddRange(GetMenuItems());
             return menuItem;
@@ -81,15 +81,35 @@ namespace CustomShortcutMenu
             return SubItems.Select(item => item.GetMenuItem()).ToArray();
         }
 
+        /// <summary>
+        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
+            var sb = new StringBuilder(Description);
+            var hasKey = IsControl || IsAlt || IsShift || Shortcut != Keys.None;
+            if (hasKey) sb.Append("(");
+            sb.Append(GetHotkeyString());
+            if (hasKey) sb.Append(")");
+            return sb.ToString();
+        }
+
+        public string GetHotkeyString()
+        {
             var sb = new StringBuilder();
+            //if (withModifiers)
+            //{
+            //    //if (Modifiers != Keys.None) sb.Append(Modifiers);
+            //}
             if (IsControl) sb.Append("<Control> + ");
             if (IsAlt) sb.Append("<Alt> + ");
             if (IsShift) sb.Append("<Shift> + ");
-            if (Shortcut!=Keys.None) sb.Append(Shortcut);
-
-            return base.ToString() + " " + sb;
+            if (Shortcut != Keys.None) sb.Append(Shortcut);
+            return sb.ToString();
         }
 
         public void Dispose()

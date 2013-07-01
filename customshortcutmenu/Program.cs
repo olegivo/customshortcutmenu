@@ -27,38 +27,40 @@ namespace CustomShortcutMenu
                 (
                     new ShortcutMenu
                         {
-                            Description = "F11",
+                            Description = "Обновить",
                             Shortcut = Keys.F11,
                             Modifiers = Keys.Control | Keys.Alt | Keys.Shift,
                             SubItems = new List<ShortcutMenu>(new[]
                                 {
-                                    new ShortcutMenu
+                                    new ShortcutMenuItem
                                         {
-                                            Description = "1",
-                                            SubItems = new List<ShortcutMenu>
-                                                {
-                                                    new ShortcutMenuItem
-                                                        {
-                                                            Description = "11",
-                                                            Filename = @"c:\11.bat"
-                                                        },
-                                                    new ShortcutMenuItem
-                                                        {
-                                                            Description = "12",
-                                                            Filename = @"c:\12.bat"
-                                                        }
-
-                                                }
+                                            Description = "Update CityEstate",
+                                            Filename = @"D:\Documents\Batch\Update CityEstate.cmd"
                                         },
                                     new ShortcutMenuItem
                                         {
-                                            Description = "2",
-                                            Filename = @"c:\1.bat"
+                                            Description = "Update SVNDocs",
+                                            Filename = @"D:\Documents\Batch\Update SVNDocs.cmd"
                                         },
                                     new ShortcutMenuItem
                                         {
-                                            Description = "3",
-                                            Filename = @"c:\2.bat"
+                                            Description = "Update WebMedia",
+                                            Filename = @"D:\Documents\Batch\Update WebMedia.cmd"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "Update AdSender",
+                                            Filename = @"D:\Documents\Batch\Update AdSender.cmd"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "Update AvitoTools",
+                                            Filename = @"D:\Documents\Batch\Update AvitoTools.cmd"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "Update ParseReports",
+                                            Filename = @"D:\Documents\Batch\Update ParseReports.cmd"
                                         }
                                 })
                         });
@@ -66,39 +68,96 @@ namespace CustomShortcutMenu
                 (
                     new ShortcutMenu
                         {
-                            Description = "F12",
+                            Description = "Открыть",
                             Shortcut = Keys.F12,
                             Modifiers = Keys.Control | Keys.Alt | Keys.Shift,
                             SubItems = new List<ShortcutMenu>(new[]
                                 {
-                                    new ShortcutMenu
+                                    new ShortcutMenuItem
                                         {
-                                            Description = "4",
-                                            SubItems = new List<ShortcutMenu>
-                                                {
-                                                    new ShortcutMenuItem
-                                                        {
-                                                            Description = "41",
-                                                            Filename = @"c:\41.bat"
-                                                        },
-                                                    new ShortcutMenuItem
-                                                        {
-                                                            Description = "42",
-                                                            Filename = @"c:\42.bat"
-                                                        }
-
-                                                }
+                                            Description = "CityEstate",
+                                            Filename = @"C:\Industry\Win32\CityEstate\CityEstate.sln"
                                         },
                                     new ShortcutMenuItem
                                         {
-                                            Description = "5",
-                                            Filename = @"c:\5.bat"
+                                            Description = "WebMedia",
+                                            Filename = @"C:\Industry\Win32\WebMedia\WebMedia.sln"
                                         },
                                     new ShortcutMenuItem
                                         {
-                                            Description = "6",
-                                            Filename = @"c:\6.bat"
+                                            Description = "MediaEditor",
+                                            Filename =
+                                                @"C:\Industry\Win32\CityEstate\Utility\MediaEditor\MediaEditor.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "ChainEditor",
+                                            Filename =
+                                                @"C:\Industry\Win32\CityEstate\Utility\ChainEditor\ChainEditor.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "MediaServices",
+                                            Filename =
+                                                @"C:\Industry\Win32\CityEstate\Utility\MediaServices\MediaServices.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "WebMediaDatabase",
+                                            Filename = @"C:\Industry\Win32\WebMedia\DB\WebMediaDatabase.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "CityEstateDatabase",
+                                            Filename = @"C:\Industry\Win32\CityEstate\DB\CityEstateDatabase.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "WebMediaCMS",
+                                            Filename = @"C:\Industry\Win32\WebMedia\Main\WebMediaCMS\WebMediaCMS.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "AdSending",
+                                            Filename = @"C:\industry\Win32\AdSending\AdSending.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "AvitoTools",
+                                            Filename = @"C:\Industry\Win32\AvitoTools\AvitoTools.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "AvitoAgentDB",
+                                            Filename = @"C:\Industry\Win32\AvitoTools\DB\AvitoAgentDB.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "RTServer",
+                                            Filename = @"C:\Industry\Databases\RTServer\RTServer.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "MediaProviderDatabase",
+                                            Filename = @"C:\Industry\Databases\MediaProvider\MediaProviderDatabase.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "NMarketMedia",
+                                            Filename =
+                                                @"C:\Industry\Win32\CityEstate\Utility\NMarketMedia\NMarketMedia.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "RealTime",
+                                            Filename = @"C:\Industry\BI.Realtime\RealTime.sln"
+                                        },
+                                    new ShortcutMenuItem
+                                        {
+                                            Description = "AdLinks.Collectors",
+                                            Filename = @"C:\Industry\Win32\ParseReports\AdLinks.Collectors.sln"
                                         }
+
                                 })
                         });
 

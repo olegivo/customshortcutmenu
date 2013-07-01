@@ -16,7 +16,14 @@ namespace CustomShortcutMenu
             if (SubItems == null || SubItems.Count == 0) menuItem.Click += (sender, e) =>
                 {
                     if (File.Exists(Filename))
-                        Process.Start(Filename);
+                    {
+                        var processStartInfo = new ProcessStartInfo(Filename)
+                            {
+                                WorkingDirectory = Path.GetDirectoryName(Filename)
+                            };
+                        Process.Start(processStartInfo);
+                        //new Process()
+                    }
                     else
                         MessageBox.Show
                             (
